@@ -1,7 +1,11 @@
 using UnityEngine;
 using System;
-using TMPro; // For the Action event
+using NaughtyAttributes;
+using TMPro; // For TextMeshPro
 
+/// <summary>
+/// Manages game state including timers and world switching.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -17,21 +21,24 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        // Singleton pattern
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            Debug.Log("GameManager instance created.");
         }
         else
         {
+            Debug.Log("Duplicate GameManager instance found, destroying duplicate.");
             Destroy(gameObject);
         }
     }
 
     private void Start()
     {
-        // Subscribe to the event here
-        // Example: SomeClass.OnSwitchEvent += SwitchTimers;
+        //subscribe to events
+        Debug.Log("GameManager started.");
     }
 
     private void Update()
@@ -50,9 +57,11 @@ public class GameManager : MonoBehaviour
         UpdateTimerTexts(); // Update the timer texts every frame
     }
 
+    [Button("Switch Timers")]
     private void SwitchTimers()
     {
         isTimer1Active = !isTimer1Active;
+        Debug.Log($"Switched timers. Timer1 is now {(isTimer1Active ? "active" : "inactive")}.");
     }
 
     public void AddTimeToInactiveTimer(float timeToAdd)
@@ -60,10 +69,12 @@ public class GameManager : MonoBehaviour
         if (isTimer1Active)
         {
             Timer2 += timeToAdd;
+            Debug.Log($"Added {timeToAdd} seconds to Timer2.");
         }
         else
         {
             Timer1 += timeToAdd;
+            Debug.Log($"Added {timeToAdd} seconds to Timer1.");
         }
     }
 
@@ -72,22 +83,34 @@ public class GameManager : MonoBehaviour
         if (timer <= 0)
         {
             OnEndGame?.Invoke();
+            Debug.Log("Timer ran out, triggering end game event.");
         }
     }
 
     private void UpdateTimerTexts()
     {
-        // Formatting and updating the text
-        Timer1Text.text = $"{Timer1:F1}";
-        Timer2Text.text = $"{Timer2:F1}";
-
-        // Setting the color and transparency
-        Timer1Text.color = isTimer1Active ? Color.yellow : new Color(1, 1, 0, 0.5f); // Active: Yellow, Inactive: Yellow and transparent
+        Timer1Text.text = FormatTime(Timer1);
+        Timer2Text.text = FormatTime(Timer2);
+        Timer1Text.color = isTimer1Active ? Color.yellow : new Color(1, 1, 0, 0.5f);
         Timer2Text.color = !isTimer1Active ? Color.yellow : new Color(1, 1, 0, 0.5f);
+        Debug.Log($"Updated timer texts: Timer1 - {Timer1Text.text}, Timer2 - {Timer2Text.text}");
+    }
+
+    /// <summary>
+    /// Formats the given time in minutes and seconds.
+    /// </summary>
+    /// <param name="timeInSeconds">The time in seconds.</param>
+    /// <returns>A string formatted as minutes:seconds.</returns>
+    private string FormatTime(float timeInSeconds)
+    {
+        int minutes = Mathf.FloorToInt(timeInSeconds / 60);
+        int seconds = Mathf.FloorToInt(timeInSeconds % 60);
+        return $"{minutes:00}:{seconds:00}";
     }
 
     private void OnDestroy()
     {
-        // Unsubscribe from the event here, if any
+        //unsubscribe from events
+        Debug.Log("GameManager instance destroyed.");
     }
 }
