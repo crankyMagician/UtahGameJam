@@ -47,6 +47,12 @@ namespace UnityEngine.UI.ProceduralImage
                 this.SetVerticesDirty();
             }
         }
+        
+        public void SetFillAmount(float amount)
+        {
+            this.fillAmount = amount;
+        }
+
 
         public float FalloffDistance
         {

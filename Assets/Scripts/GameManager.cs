@@ -4,6 +4,7 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.UI.ProceduralImage;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class GameManager : MonoBehaviour
     [BoxGroup("Timers")] public TextMeshProUGUI TotalTimeText;
 
     [BoxGroup("Timers")] public TextMeshProUGUI GameOverText;
+    
+    public ProceduralImage proceduralImage;
+
 
    public 
     CanvasGroup canvasGroup;// = GetComponent<CanvasGroup>();
@@ -66,6 +70,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    
     private void InitializeUI()
     {
         // Initialize UI elements to be fully transparent at the start
@@ -121,6 +126,7 @@ public class GameManager : MonoBehaviour
 
             CheckTimer(timeManager.Timer1);
             CheckTimer(timeManager.Timer2);
+            UpdateProceduralImageFill(); // Add this line
         }
         catch (Exception ex)
         {
@@ -137,7 +143,18 @@ public class GameManager : MonoBehaviour
         Timer2Text.text = "";
     }
     
+    private void UpdateProceduralImageFill()
+    {
+        float fillAmount = CalculateFillAmount();
+        proceduralImage.SetFillAmount(50f);
+    }
 
+    private float CalculateFillAmount()
+    {
+        float activeTimer = timeManager.IsTimer1Active() ? timeManager.Timer1 : timeManager.Timer2;
+        float maxTimerValue = 120f; // Assuming the timer starts at 120 seconds
+        return Mathf.Clamp01(activeTimer / maxTimerValue);
+    }
 
     private void UpdateTimerTexts()
     {
