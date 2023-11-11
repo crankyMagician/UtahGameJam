@@ -33,6 +33,19 @@ public class TimeManager
             Debug.LogError("Error in UpdateTimers: " + ex.Message);
         }
     }
+    
+    public void SetTimerOne(float timeInSeconds)
+    {
+        try
+        {
+            Timer1 = timeInSeconds;
+            Debug.Log($"Timer1 set to {timeInSeconds}");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error in SetTimerOneTo: " + ex.Message);
+        }
+    }
 
     public bool TrySwitchTimer()
     {

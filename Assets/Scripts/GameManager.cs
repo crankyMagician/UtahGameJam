@@ -54,16 +54,8 @@ public class GameManager : MonoBehaviour
     {
         try
         {
-            // Initialize UI elements to be fully transparent at the start
-            InitializeCanvasGroup();
-
-            // Other initializations for your game
-            TotalTimeText.text = "";
-            GameOverText.text = "";
-            retryButton.gameObject.SetActive(false);
-            quitButton.gameObject.SetActive(false);
-
-            // Fade in all UI elements
+            InitializeUI();
+            SetupButtonListeners();
             FadeInUI();
 
             Debug.Log("GameManager started");
@@ -72,6 +64,24 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("Error in Start: " + ex.Message);
         }
+    }
+
+    private void InitializeUI()
+    {
+        // Initialize UI elements to be fully transparent at the start
+        InitializeCanvasGroup();
+
+        // Other initial UI setup
+        TotalTimeText.text = "";
+        GameOverText.text = "";
+        retryButton.gameObject.SetActive(false);
+        quitButton.gameObject.SetActive(false);
+    }
+
+    private void SetupButtonListeners()
+    {
+        retryButton.onClick.AddListener(RestartGame);
+        quitButton.onClick.AddListener(QuitGame);
     }
 
     private void InitializeCanvasGroup()
@@ -97,10 +107,7 @@ public class GameManager : MonoBehaviour
         {
             if (!isGameActive)
             {
-                TotalTimeText.text = timeManager.FormatTime(totalElapsedTime);
-                GameOverText.text = "Game Over play again?";
-                retryButton.gameObject.SetActive(true);
-                quitButton.gameObject.SetActive(true);
+                HandleGameInactiveState();
                 return;
             }
 
@@ -120,6 +127,17 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Error in Update: " + ex.Message);
         }
     }
+    private void HandleGameInactiveState()
+    {
+        TotalTimeText.text = timeManager.FormatTime(totalElapsedTime);
+        GameOverText.text = "Game Over play again?";
+        retryButton.gameObject.SetActive(true);
+        quitButton.gameObject.SetActive(true);
+        Timer1Text.text = "";
+        Timer2Text.text = "";
+    }
+    
+
 
     private void UpdateTimerTexts()
     {
@@ -233,6 +251,12 @@ public class GameManager : MonoBehaviour
             isGameActive = true;
             totalElapsedTime = 0f;
             timeManager = new TimeManager();
+            // Other initial UI setup
+            TotalTimeText.text = "";
+            GameOverText.text = "";
+            retryButton.gameObject.SetActive(false);
+            quitButton.gameObject.SetActive(false);
+            
             Debug.Log("Game restarted");
         });
     }
@@ -261,5 +285,21 @@ public class GameManager : MonoBehaviour
         }
 
         canvasGroup.DOFade(0, 0.5f).OnComplete(() => onComplete?.Invoke());
+    }
+    
+    [Button("Debug End Game")]
+    public void DebugEndGame()
+    {
+        try
+        {
+            // Set Timer 1 to 1 second
+            timeManager.SetTimerOne(1f);
+
+            Debug.Log("Debug End Game: Timer 1 set to 1 second");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error in DebugEndGame: " + ex.Message);
+        }
     }
 }
