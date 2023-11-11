@@ -16,7 +16,11 @@ public class InputBehaviour : MonoBehaviour {
 
         controller.UpdateMovement(movement);
         
-        if(Input.GetKeyDown("space")) {
+        if(Input.GetKeyDown(KeyCode.Space)) {
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.R)) {
             WorldSwitcher.Instance.TrySwitchWorld();
         }
     }
