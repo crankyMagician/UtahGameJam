@@ -7,65 +7,108 @@ public class TimeManager
     public float Timer1 { get; private set; } = 120f;
     public float Timer2 { get; private set; } = 120f;
 
-    
     private bool isTimer1Active = true;
     private float timeSinceLastSwitch = 0f;
     private const float SwitchCooldown = 30f;
 
     public void UpdateTimers(float deltaTime)
     {
-        if (isTimer1Active && Timer1 > 0)
+        try
         {
-            Timer1 -= deltaTime;
-        }
-        else if (!isTimer1Active && Timer2 > 0)
-        {
-            Timer2 -= deltaTime;
-        }
+            if (isTimer1Active && Timer1 > 0)
+            {
+                Timer1 -= deltaTime;
+            }
+            else if (!isTimer1Active && Timer2 > 0)
+            {
+                Timer2 -= deltaTime;
+            }
 
-        timeSinceLastSwitch += deltaTime;
+            timeSinceLastSwitch += deltaTime;
+
+            Debug.Log($"Updated Timers: Timer1 = {Timer1}, Timer2 = {Timer2}");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error in UpdateTimers: " + ex.Message);
+        }
     }
 
     public bool TrySwitchTimer()
     {
-        if (timeSinceLastSwitch < SwitchCooldown)
+        try
         {
+            if (timeSinceLastSwitch < SwitchCooldown)
+            {
+                Debug.Log("Switch timer failed due to cooldown");
+                return false;
+            }
+
+            float otherTimer = isTimer1Active ? Timer2 : Timer1;
+            if (otherTimer < SwitchCooldown)
+            {
+                Debug.Log("Switch timer failed due to other timer's cooldown");
+                return false;
+            }
+
+            isTimer1Active = !isTimer1Active;
+            timeSinceLastSwitch = 0f;
+            Debug.Log($"Timer switched. Active timer: {(isTimer1Active ? "Timer1" : "Timer2")}");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error in TrySwitchTimer: " + ex.Message);
             return false;
         }
-
-        float otherTimer = isTimer1Active ? Timer2 : Timer1;
-        if (otherTimer < SwitchCooldown)
-        {
-            return false;
-        }
-
-        isTimer1Active = !isTimer1Active;
-        timeSinceLastSwitch = 0f;
-        return true;
     }
 
     public void AddTimeToInactiveTimer(float timeToAdd)
     {
-        if (isTimer1Active)
+        try
         {
-            Timer2 += timeToAdd;
+            if (isTimer1Active)
+            {
+                Timer2 += timeToAdd;
+            }
+            else
+            {
+                Timer1 += timeToAdd;
+            }
+
+            Debug.Log($"Added time. Timer1 = {Timer1}, Timer2 = {Timer2}");
         }
-        else
+        catch (Exception ex)
         {
-            Timer1 += timeToAdd;
+            Debug.LogError("Error in AddTimeToInactiveTimer: " + ex.Message);
         }
     }
 
     public string FormatTime(float timeInSeconds)
     {
-        int minutes = Mathf.FloorToInt(timeInSeconds / 60);
-        int seconds = Mathf.FloorToInt(timeInSeconds % 60);
-        return $"{minutes:00}:{seconds:00}";
+        try
+        {
+            int minutes = Mathf.FloorToInt(timeInSeconds / 60);
+            int seconds = Mathf.FloorToInt(timeInSeconds % 60);
+            return $"{minutes:00}:{seconds:00}";
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error in FormatTime: " + ex.Message);
+            return "Error";
+        }
     }
     
-    // New method to get the active timer state
     public bool IsTimer1Active()
     {
-        return isTimer1Active;
+        try
+        {
+            return isTimer1Active;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error in IsTimer1Active: " + ex.Message);
+            return false; // Default or error state
+        }
     }
 }
