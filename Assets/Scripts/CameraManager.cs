@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class CameraManager : MonoBehaviour, IWorldSwitcher
 {
-    private Camera camera;
+    private new Camera camera;
 
     private void Awake() {
         camera = GetComponent<Camera>();
