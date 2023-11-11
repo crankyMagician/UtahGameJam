@@ -70,3 +70,24 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Additional entries for 2D Unity projects
+# Ignore all .meta files in 2D specific folders
+/[Aa]ssets/[Ss]prites/*.meta
+/[Aa]ssets/[Aa]nimations/*.meta
+/[Aa]ssets/[Mm]aterials/*.meta
+
+# Ignore specific file types common in 2D projects
+*.psd
+*.ai
+*.fla
+
+# Ignore custom Editor user settings
+/[Aa]ssets/[Ee]ditor[Uu]ser[Ss]ettings/
+
+# Ignore specific 2D tool folders
+/[Aa]ssets/[Tt]ools/[Ss]prite[Ee]ditor/
+/[Aa]ssets/[Tt]ools/[Aa]nimation[Ee]ditor/
+
+# Ignore any scriptable object data files
+*.asset
