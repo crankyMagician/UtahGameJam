@@ -8,18 +8,36 @@ using TMPro; // For TextMeshPro
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+  
     public static GameManager Instance { get; private set; }
 
+
+ 
     public float Timer1 { get; private set; } = 120f;
+
+
     public float Timer2 { get; private set; } = 120f;
+
+    [BoxGroup("Timers")]
+    [ReadOnly]
+    public TextMeshProUGUI Timer1Text; // Reference to the TMP text for Timer1
+
+    [BoxGroup("Timers")]
+    [ReadOnly]
+    public TextMeshProUGUI Timer2Text; // Reference to the TMP text for Timer2
+
+    [BoxGroup("Switch Control")]
+    [SerializeField, ReadOnly]
     private bool isTimer1Active = true;
 
-    public TextMeshProUGUI Timer1Text; // Reference to the TMP text for Timer1
-    public TextMeshProUGUI Timer2Text; // Reference to the TMP text for Timer2
-    
-    
+    [BoxGroup("Switch Control")]
+    [SerializeField, ReadOnly]
     private float timeSinceLastSwitch = 0f; // Time since the last switch
+
+    [BoxGroup("Switch Control")]
+    [SerializeField, ReadOnly]
     private const float SwitchCooldown = 30f; // 30 seconds cooldown for switching
+
 
     public static event Action OnEndGame;
 
