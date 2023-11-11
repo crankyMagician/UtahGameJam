@@ -69,3 +69,12 @@ Overview
 🤝 Contributing
 
 Contributions to "InvertQuest: Time's Echo" are welcome. Please ensure you follow the existing project structure and coding standards.
+
+
+Henry: Movement and Color and input change 
+
+Joe: Enemy System
+
+Nick: World Design, Player Design, Enemy Design 
+
+Sam: Time 
