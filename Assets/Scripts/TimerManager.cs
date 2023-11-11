@@ -25,8 +25,6 @@ public class TimeManager
             }
 
             timeSinceLastSwitch += deltaTime;
-
-            Debug.Log($"Updated Timers: Timer1 = {Timer1}, Timer2 = {Timer2}");
         }
         catch (Exception ex)
         {
