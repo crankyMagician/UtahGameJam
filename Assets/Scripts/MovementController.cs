@@ -11,7 +11,7 @@ public class MovementController : MonoBehaviour {
 
     private void Awake() {
         //Move the player to start on the bottom of the screen
-        //transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.1f, 10));
+        transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.1f, 10));
     }
 
     private void Update() {
