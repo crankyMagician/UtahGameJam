@@ -1,18 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldSwitcher : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
+public class WorldSwitcher : MonoBehaviour {
+    public static WorldSwitcher Instance { get; private set; }
+
+    private List<IWorldSwitcher> switchers = new();
+    
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(gameObject);
+        }
+    }
+    
+    /// <summary>
+    /// Attempt to change the player's world
+    /// </summary>
+    public void TrySwitchWorld() {
+        //Check if it is allowed
         
+        //If it is, switch the world
+        SwitchWorld();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void SwitchWorld() {
+        foreach (IWorldSwitcher switcher in switchers) {
+            switcher.OnSwitchWorld(GameManager.Instance.IsTimer1Active());
+        }
+    }
+    
+    public void RegisterSpriteSwitcher(IWorldSwitcher worldSwitcher) {
+        switchers.Add(worldSwitcher);
+    }
+    
+    public void UnregisterSpriteSwitcher(IWorldSwitcher worldSwitcher) {
+        switchers.Remove(worldSwitcher);
     }
 }
