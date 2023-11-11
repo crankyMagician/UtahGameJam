@@ -21,6 +21,7 @@ public class WorldSwitcher : MonoBehaviour {
     /// </summary>
     public void TrySwitchWorld() {
         //Check if it is allowed
+        //GameManager.Instance.SwitchTimers();
         
         //If it is, switch the world
         SwitchWorld();
@@ -32,11 +33,11 @@ public class WorldSwitcher : MonoBehaviour {
         }
     }
     
-    public void RegisterSpriteSwitcher(IWorldSwitcher worldSwitcher) {
+    public void RegisterSwitcher(IWorldSwitcher worldSwitcher) {
         switchers.Add(worldSwitcher);
     }
     
-    public void UnregisterSpriteSwitcher(IWorldSwitcher worldSwitcher) {
+    public void UnregisterSwitcher(IWorldSwitcher worldSwitcher) {
         switchers.Remove(worldSwitcher);
     }
 }
