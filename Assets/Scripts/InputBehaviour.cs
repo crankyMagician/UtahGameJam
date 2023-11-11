@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MovementController))]
+[RequireComponent(typeof(MovementController), typeof(ProjectileSpawner))]
 public class InputBehaviour : MonoBehaviour {
-    MovementController controller;
+    private MovementController controller;
+    private ProjectileSpawner projectileSpawner;
     
     private void Awake() {
         //We know this is always valid because of RequireComponent
         controller = GetComponent<MovementController>();
+        projectileSpawner = GetComponent<ProjectileSpawner>();
     }
        
     void Update() {
@@ -17,7 +19,9 @@ public class InputBehaviour : MonoBehaviour {
         controller.UpdateMovement(movement);
         
         if(Input.GetKeyDown(KeyCode.Space)) {
-            
+            projectileSpawner.SummonProjectile(transform);
+        } else if (Input.GetKeyUp(KeyCode.Space)) {
+            projectileSpawner.LaunchProjectile();
         }
 
         if (Input.GetKeyDown(KeyCode.R)) {
