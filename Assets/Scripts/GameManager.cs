@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI Timer1Text; // Reference to the TMP text for Timer1
     public TextMeshProUGUI Timer2Text; // Reference to the TMP text for Timer2
+    
+    
+    private float timeSinceLastSwitch = 0f; // Time since the last switch
+    private const float SwitchCooldown = 30f; // 30 seconds cooldown for switching
 
     public static event Action OnEndGame;
 
@@ -55,14 +59,29 @@ public class GameManager : MonoBehaviour
         }
 
         UpdateTimerTexts(); // Update the timer texts every frame
+        // Update the time since the last switch
+        timeSinceLastSwitch += Time.deltaTime;
     }
 
     [Button("Switch Timers")]
     private void SwitchTimers()
     {
+        // Check if 30 seconds have passed since the last switch
+        if (timeSinceLastSwitch < SwitchCooldown)
+        {
+            Debug.Log($"Switching timers is on cooldown. Please wait {SwitchCooldown - timeSinceLastSwitch:F2} more seconds.");
+            // You can also add a UI message or sound effect here to notify the player.
+            return;
+        }
+
         isTimer1Active = !isTimer1Active;
         Debug.Log($"Switched timers. Timer1 is now {(isTimer1Active ? "active" : "inactive")}.");
+
+        // Reset the time since the last switch
+        timeSinceLastSwitch = 0f;
     }
+
+
 
     public void AddTimeToInactiveTimer(float timeToAdd)
     {
