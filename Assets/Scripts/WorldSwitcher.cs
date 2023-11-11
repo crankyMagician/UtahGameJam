@@ -29,7 +29,7 @@ public class WorldSwitcher : MonoBehaviour {
 
     private void SwitchWorld() {
         foreach (IWorldSwitcher switcher in switchers) {
-            switcher.OnSwitchWorld(GameManager.Instance.IsTimer1Active());
+            switcher.OnSwitchWorld(GameManager.Instance.timeManager.IsTimer1Active());
         }
     }
     

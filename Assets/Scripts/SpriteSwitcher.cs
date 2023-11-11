@@ -21,7 +21,7 @@ public class SpriteSwitcher : MonoBehaviour, IWorldSwitcher {
     private void OnEnable() {
         WorldSwitcher.Instance.RegisterSwitcher(this);
         
-        OnSwitchWorld(GameManager.Instance.IsTimer1Active()); //Setup the initial sprite in case we were instantiated at runtime
+        OnSwitchWorld(GameManager.Instance.timeManager.IsTimer1Active()); //Setup the initial sprite in case we were instantiated at runtime
     }
     
     private void OnDisable() {

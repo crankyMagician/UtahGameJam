@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField]
-    private TimeManager timeManager = new TimeManager();
+    public TimeManager timeManager = new TimeManager();
     private float totalElapsedTime = 0f;
     private bool isGameActive = true;
 
