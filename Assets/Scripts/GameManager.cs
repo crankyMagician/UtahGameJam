@@ -124,8 +124,8 @@ public class GameManager : MonoBehaviour
 
             totalElapsedTime += deltaTime;
 
-            CheckTimer(timeManager.Timer1);
-            CheckTimer(timeManager.Timer2);
+            CheckTimer(timeManager.IsTimer1Active() ? timeManager.Timer1 : timeManager.Timer2); //Only check the active timer, its ok if the other timer is <= 0
+
             UpdateProceduralImageFill(); // Add this line
         }
         catch (Exception ex)

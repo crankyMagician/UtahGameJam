@@ -6,7 +6,7 @@ using UnityEngine;
 public class TimeManager
 {
     public float Timer1 { get; private set; } = 120f;
-    public float Timer2 { get; private set; } = 120f;
+    public float Timer2 { get; private set; } = 0f;
   
 
     private bool isTimer1Active = true;
