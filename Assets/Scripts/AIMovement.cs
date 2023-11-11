@@ -112,7 +112,7 @@ public class AIMovement : MonoBehaviour
 	///Should we destroy here ??
 	private void DestroyBot() {
 		ParticleSystem particle = Instantiate(deathParticlesPrefab);
-		particle.collision.AddPlane(PlayerController.Player.transform)
+		particle.collision.AddPlane(PlayerController.Player.transform);
 		
 		Destroy(gameObject);
 	}
