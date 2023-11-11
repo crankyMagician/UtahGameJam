@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 936787927}
   - component: {fileID: 936787926}
   m_Layer: 5
-  m_Name: TotalTimeTimer (1)
+  m_Name: GameOverText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -657,8 +657,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4281611418
+  m_fontColor: {r: 0.6037736, g: 0.20220721, b: 0.20220721, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1079,6 +1079,7 @@ GameObject:
   - component: {fileID: 1475257324}
   - component: {fileID: 1475257323}
   - component: {fileID: 1475257322}
+  - component: {fileID: 1475257325}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1174,6 +1175,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!225 &1475257325
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475257320}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1593769213
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,6 +1491,7 @@ MonoBehaviour:
   Timer2Text: {fileID: 1856510165}
   TotalTimeText: {fileID: 1193791319}
   GameOverText: {fileID: 936787926}
+  canvasGroup: {fileID: 1475257325}
   retryButton: {fileID: 1028653738}
   quitButton: {fileID: 66851967}
 --- !u!4 &1721661103

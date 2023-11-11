@@ -3,6 +3,7 @@ using UnityEngine;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     [BoxGroup("Timers")] public TextMeshProUGUI GameOverText;
 
+   public 
+    CanvasGroup canvasGroup;// = GetComponent<CanvasGroup>();
     public Button retryButton;
     public Button quitButton;
 
@@ -51,16 +54,41 @@ public class GameManager : MonoBehaviour
     {
         try
         {
+            // Initialize UI elements to be fully transparent at the start
+            InitializeCanvasGroup();
+
+            // Other initializations for your game
             TotalTimeText.text = "";
             GameOverText.text = "";
             retryButton.gameObject.SetActive(false);
             quitButton.gameObject.SetActive(false);
+
+            // Fade in all UI elements
+            FadeInUI();
+
             Debug.Log("GameManager started");
         }
         catch (Exception ex)
         {
             Debug.LogError("Error in Start: " + ex.Message);
         }
+    }
+
+    private void InitializeCanvasGroup()
+    {
+     
+        if (canvasGroup == null)
+        {
+            // If not, add a CanvasGroup component and set the initial alpha to 0
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
+        canvasGroup.alpha = 0;
+    }
+
+    private void FadeInUI()
+    {
+      
+        canvasGroup.DOFade(1, 0.5f); // Fades in over 0.5 seconds
     }
 
     private void Update()
@@ -99,6 +127,8 @@ public class GameManager : MonoBehaviour
         {
             Timer1Text.text = timeManager.FormatTime(timeManager.Timer1);
             Timer2Text.text = timeManager.FormatTime(timeManager.Timer2);
+
+            UpdateTimerColors();
         }
         catch (Exception ex)
         {
@@ -111,14 +141,25 @@ public class GameManager : MonoBehaviour
         try
         {
             var isTimer1Active = timeManager.IsTimer1Active();
-            Timer1Text.color = isTimer1Active ? Color.yellow : new Color(1, 1, 0, 0.5f);
-            Timer2Text.color = !isTimer1Active ? Color.yellow : new Color(1, 1, 0, 0.5f);
+
+            // Set active timer to red with tween, inactive to transparent yellow
+            if (isTimer1Active)
+            {
+                Timer1Text.DOColor(Color.red, 0.5f); // Active timer 1
+                Timer2Text.color = new Color(1, 1, 0, 0.5f); // Inactive timer 2
+            }
+            else
+            {
+                Timer2Text.DOColor(Color.red, 0.5f); // Active timer 2
+                Timer1Text.color = new Color(1, 1, 0, 0.5f); // Inactive timer 1
+            }
         }
         catch (Exception ex)
         {
             Debug.LogError("Error in UpdateTimerColors: " + ex.Message);
         }
     }
+
 
     private void CheckTimer(float timer)
     {
@@ -139,12 +180,17 @@ public class GameManager : MonoBehaviour
             isGameActive = false;
             OnEndGame?.Invoke();
             Debug.Log("Game ended");
+
+            // Tweening the GameOverText
+            GameOverText.transform.DOScale(1.2f, 0.5f).SetLoops(2, LoopType.Yoyo);
         }
         catch (Exception ex)
         {
             Debug.LogError("Error in EndGame: " + ex.Message);
         }
     }
+
+  
 
 
     [Button("Try to switch timers")]
@@ -180,36 +226,40 @@ public class GameManager : MonoBehaviour
     [Button("Restart Game")]
     public void RestartGame()
     {
-        try
+        // Fade out UI elements
+        FadeOutUI(() =>
         {
+            // Actual restart logic
             isGameActive = true;
             totalElapsedTime = 0f;
             timeManager = new TimeManager();
             Debug.Log("Game restarted");
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError("Error in RestartGame: " + ex.Message);
-        }
+        });
     }
 
-    [Button("Quit Game")]
     public void QuitGame()
     {
-        try
+        // Fade out UI elements
+        FadeOutUI(() =>
         {
-            // Save any game data if necessary
-
+            // Quitting logic
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-            Application.Quit();
+        Application.Quit();
 #endif
             Debug.Log("Quit game triggered");
-        }
-        catch (Exception ex)
+        });
+    }
+
+    private void FadeOutUI(Action onComplete)
+    {
+        CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
         {
-            Debug.LogError("Error in QuitGame: " + ex.Message);
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
+
+        canvasGroup.DOFade(0, 0.5f).OnComplete(() => onComplete?.Invoke());
     }
 }
