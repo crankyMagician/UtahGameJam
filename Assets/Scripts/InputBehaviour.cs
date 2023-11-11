@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MovementController), typeof(ProjectileSpawner))]
+[RequireComponent(typeof(PlayerController), typeof(ProjectileSpawner))]
 public class InputBehaviour : MonoBehaviour {
-    private MovementController controller;
+    private PlayerController controller;
     private ProjectileSpawner projectileSpawner;
     
     private void Awake() {
         //We know this is always valid because of RequireComponent
-        controller = GetComponent<MovementController>();
+        controller = GetComponent<PlayerController>();
         projectileSpawner = GetComponent<ProjectileSpawner>();
     }
        

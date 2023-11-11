@@ -10,6 +10,8 @@ namespace J
 
 public class AIMovement : MonoBehaviour
 {
+	[SerializeField] private ParticleSystem deathParticlesPrefab;
+	
 	public delegate void OnEnemyReachedBottomDelegate(AIMovement movement);
 
 	static OnEnemyReachedBottomDelegate OnEnemyReachedBottom;
@@ -108,8 +110,10 @@ public class AIMovement : MonoBehaviour
 	}
 
 	///Should we destroy here ??
-	private void DestroyBot()
-	{
+	private void DestroyBot() {
+		deathParticlesPrefab.collision.AddPlane(PlayerController.Player.transform);
+		Instantiate(deathParticlesPrefab);
+		
 		Destroy(gameObject);
 	}
 }

@@ -4,12 +4,18 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class MovementController : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
+    public static PlayerController Player { get; set; }
+    
     [SerializeField] private float speedMultiplier = 1; //This is reserved in case we decide to add a speed multiplier at some point
     private const float speedModifier = 15; //This is used to counteract Time.deltaTime making our numbers really small
     private Vector3 lastMovement =  Vector3.zero;
 
     private void Awake() {
+        if (Player == null) {
+            Player = this;
+        }
+        
         //Move the player to start on the bottom of the screen
         transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.1f, 10));
     }
