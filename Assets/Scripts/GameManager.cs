@@ -217,7 +217,6 @@ public class GameManager : MonoBehaviour
         try
         {
             return timeManager.TrySwitchTimer();
-            Debug.Log("Attempted to switch timers");
         }
         catch (Exception ex)
         {
