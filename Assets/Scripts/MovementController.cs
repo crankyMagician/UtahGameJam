@@ -6,11 +6,12 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour {
     [SerializeField] private float speedMultiplier = 1; //This is reserved in case we decide to add a speed multiplier at some point
-    private const float speedModifier = 25; //This is used to counteract Time.deltaTime making our numbers really small
+    private const float speedModifier = 15; //This is used to counteract Time.deltaTime making our numbers really small
     private Vector3 lastMovement =  Vector3.zero;
 
     private void Awake() {
-        
+        //Move the player to start on the bottom of the screen
+        transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.1f, 10));
     }
 
     private void Update() {
