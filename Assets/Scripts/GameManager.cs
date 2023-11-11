@@ -327,5 +327,9 @@ public class GameManager : MonoBehaviour
         //unsubscribe from events
         Debug.Log("GameManager instance destroyed.");
     }
+    
+    public bool IsTimer1Active() {
+        return isTimer1Active;
+    }
 }
 */
