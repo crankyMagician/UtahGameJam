@@ -148,17 +148,19 @@ public class GameManager : MonoBehaviour
 
 
     [Button("Try to switch timers")]
-    public void TryToSwitchTimers()
+    public bool TryToSwitchTimers()
     {
         try
         {
-            timeManager.TrySwitchTimer();
+            return timeManager.TrySwitchTimer();
             Debug.Log("Attempted to switch timers");
         }
         catch (Exception ex)
         {
             Debug.LogError("Error in TryToSwitchTimers: " + ex.Message);
         }
+
+        return false;
     }
 
     [Button("Add Time to Timer")]

@@ -22,6 +22,8 @@ public class WorldSwitcher : MonoBehaviour {
     public void TrySwitchWorld() {
         //Check if it is allowed
         //GameManager.Instance.SwitchTimers();
+        if (!GameManager.Instance.TryToSwitchTimers())
+            return;
         
         //If it is, switch the world
         SwitchWorld();
