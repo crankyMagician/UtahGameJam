@@ -110,7 +110,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 225537f5899c9ce4d84e484b47c46f19, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3723a88af187fb24c95636cb28024b63, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -158,8 +158,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22cdeb4a736d9c84aae59449bb577113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstWorldSprite: {fileID: 21300000, guid: 225537f5899c9ce4d84e484b47c46f19, type: 3}
-  secondWorldSprite: {fileID: 21300000, guid: e839c8449b85c4c47b20752d8efbdb16, type: 3}
+  firstWorldSprite: {fileID: 21300000, guid: 3723a88af187fb24c95636cb28024b63, type: 3}
+  secondWorldSprite: {fileID: 21300000, guid: d4baef5ba84542c45ac017dafc4f6218, type: 3}
 --- !u!114 &832213662536663001
 MonoBehaviour:
   m_ObjectHideFlags: 0
