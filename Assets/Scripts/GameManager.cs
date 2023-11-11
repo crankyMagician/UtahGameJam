@@ -21,11 +21,11 @@ public class GameManager : MonoBehaviour
     [BoxGroup("Timers")] public TextMeshProUGUI TotalTimeText;
 
     [BoxGroup("Timers")] public TextMeshProUGUI GameOverText;
-    
+
     public ProceduralImage proceduralImage;
 
 
-   public 
+   public
     CanvasGroup canvasGroup;// = GetComponent<CanvasGroup>();
     public Button retryButton;
     public Button quitButton;
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
+
     private void InitializeUI()
     {
         // Initialize UI elements to be fully transparent at the start
@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
 
     private void InitializeCanvasGroup()
     {
-     
+
         if (canvasGroup == null)
         {
             // If not, add a CanvasGroup component and set the initial alpha to 0
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
 
     private void FadeInUI()
     {
-      
+
         canvasGroup.DOFade(1, 0.5f); // Fades in over 0.5 seconds
     }
 
@@ -142,11 +142,12 @@ public class GameManager : MonoBehaviour
         Timer1Text.text = "";
         Timer2Text.text = "";
     }
-    
+
     private void UpdateProceduralImageFill()
     {
         float fillAmount = CalculateFillAmount();
-        proceduralImage.SetFillAmount(50f);
+        if (proceduralImage != null)
+            proceduralImage.SetFillAmount(50f);
     }
 
     private float CalculateFillAmount()
@@ -225,7 +226,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-  
+
 
 
     [Button("Try to switch timers")]
@@ -272,7 +273,7 @@ public class GameManager : MonoBehaviour
             GameOverText.text = "";
             retryButton.gameObject.SetActive(false);
             quitButton.gameObject.SetActive(false);
-            
+
             Debug.Log("Game restarted");
         });
     }
@@ -302,7 +303,7 @@ public class GameManager : MonoBehaviour
 
         canvasGroup.DOFade(0, 0.5f).OnComplete(() => onComplete?.Invoke());
     }
-    
+
     [Button("Debug End Game")]
     public void DebugEndGame()
     {
