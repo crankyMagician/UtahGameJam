@@ -7,6 +7,9 @@ using UnityEngine;
 public class Projectile : MonoBehaviour {
     [SerializeField] private float speed = 5;
     [SerializeField] private Vector3 direction;
+
+    [SerializeField] private String targetTag;
+    
     private Rigidbody2D rb;
 
     private float lifespan = 10f;
@@ -26,5 +29,11 @@ public class Projectile : MonoBehaviour {
     public void Launch() {
         rb.velocity = direction * speed;
         launchTime = Time.time;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag(targetTag)) {
+            Destroy(gameObject);
+        }
     }
 }

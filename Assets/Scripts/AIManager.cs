@@ -24,9 +24,10 @@ namespace J {
             float mobSizeScaler = 1.2f,
             /// Slowly decrease the time between waves
             float waveTimeScalar = .9f) {
+            
             SpawnWave(mobSize, initialPosition, delayBetweenMobs);
-            J.Timer.Delay(delayBetweenWaves, () => {
-                if (!GameIsOver) {
+            J.Timer.Delay(1, () => {
+                if (GameManager.Instance.isGameActive) {
                     SpawnWave(mobSize, initialPosition, delayBetweenMobs);
                     Timer.Delay(delayBetweenWaves, () => {
                         RepeatedSpawnWave(

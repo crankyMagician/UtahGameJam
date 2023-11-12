@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     public TimeManager timeManager = new();
     private float totalElapsedTime = 0f;
-    private bool isGameActive = true;
+    public bool isGameActive = true;
 
     [BoxGroup("Timers")] public TextMeshProUGUI Timer1Text;
 
@@ -256,6 +256,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void RemoveTimeFromActiveTimer()
+    {
+        try
+        {
+            timeManager.RemoveTimeFromActiveTimer(10f);
+            Debug.Log("Added time to inactive timer");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error in AddTimeToInactiveTimer: " + ex.Message);
+        }
+    }
+    
     [Button("Restart Game")]
     public void RestartGame()
     {

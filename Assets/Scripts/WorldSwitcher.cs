@@ -30,8 +30,13 @@ public class WorldSwitcher : MonoBehaviour {
     }
 
     private void SwitchWorld() {
-        foreach (IWorldSwitcher switcher in switchers) {
-            switcher.OnSwitchWorld(GameManager.Instance.timeManager.IsTimer1Active());
+        for (var i = 0; i < switchers.Count; i++) {
+            IWorldSwitcher switcher = switchers[i];
+            
+            if(switcher == null)
+                UnregisterSwitcher(null);
+            else 
+                switcher.OnSwitchWorld(GameManager.Instance.timeManager.IsTimer1Active());
         }
     }
     
@@ -40,6 +45,7 @@ public class WorldSwitcher : MonoBehaviour {
     }
     
     public void UnregisterSwitcher(IWorldSwitcher worldSwitcher) {
-        switchers.Remove(worldSwitcher);
+        if(switchers.Contains(worldSwitcher))
+            switchers.Remove(worldSwitcher);
     }
 }

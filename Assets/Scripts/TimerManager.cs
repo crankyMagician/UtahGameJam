@@ -11,7 +11,7 @@ public class TimeManager
 
     private bool isTimer1Active = true;
     public float timeSinceLastSwitch = 0f;
-    public const float SwitchCooldown = 30f;
+    public const float SwitchCooldown = 15f;
 
     public void UpdateTimers(float deltaTime)
     {
@@ -88,6 +88,23 @@ public class TimeManager
         }
     }
 
+    public void RemoveTimeFromActiveTimer(float timeToAdd)
+    {
+        try
+        {
+            if (!isTimer1Active)
+                Timer2 -= timeToAdd;
+            else
+                Timer1 -= timeToAdd;
+
+            Debug.Log($"Added time. Timer1 = {Timer1}, Timer2 = {Timer2}");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error in AddTimeToInactiveTimer: " + ex.Message);
+        }
+    }
+    
     public string FormatTime(float timeInSeconds)
     {
         try

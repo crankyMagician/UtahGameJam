@@ -106,6 +106,8 @@ public class AIMovement : MonoBehaviour
 			OnEnemyReachedBottom?.Invoke(this);
 			OnReachedBottom?.Invoke(this);
 			DestroyBot();
+			
+			GameManager.Instance.RemoveTimeFromActiveTimer();
 		}
 	}
 
