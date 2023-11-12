@@ -14,5 +14,7 @@ public class SpecialsSpawner : MonoBehaviour {
         
         //Instantiate a random special at the top of the screen
         Instantiate(specials[Random.Range(0, specials.Length)], new Vector3(Random.Range(-8, 8), 5), Quaternion.identity);
+        
+        StartCoroutine(SpawnSpecial());
     }
 }
