@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using J;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace J
 {
@@ -37,7 +38,7 @@ public class RandomSoundPlayer: MonoBehaviour
 	{
 		// if (audioSource != null && sounds.Count > 0)
 		{
-			int soundIndex = rnd.Next(0, sounds.Count); // creates a number between 1 and 12
+			int soundIndex = Random.Range(0,sounds.Count); // creates a number between 1 and 12
 			audioSource.PlayOneShot(sounds[soundIndex]);
 		}
 	}
@@ -46,7 +47,7 @@ public class RandomSoundPlayer: MonoBehaviour
 	{
 		if (audioSource != null && sounds.Count > 0)
 		{
-			int soundIndex = rnd.Next(0, sounds.Count); // creates a number between 1 and 12
+			int soundIndex = Random.Range(0,sounds.Count); // creates a number between 1 and 12
 			if (sounds[soundIndex] == null)
 			{
 				Debug.Log("Error null sounds for object: " + gameObject.ToString());
