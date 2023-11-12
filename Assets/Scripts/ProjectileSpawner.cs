@@ -14,11 +14,13 @@ public class ProjectileSpawner : MonoBehaviour {
     
     [SerializeField, ReadOnly] public float fireRate = 0.5f;
     [SerializeField, ReadOnly] private float lastSummonTime = float.MinValue;
+
+    public int amount = 0;
     
-    public void SummonProjectile([CanBeNull] Transform parent) {
+    public void SummonProjectile([CanBeNull] Transform parent, bool bypass = false) {
         if (activeProjectile != null)
             return;
-        if(Time.time - lastSummonTime < fireRate) //Sick strat- hold onto your bullet and you can fire two in a row if you time it right
+        if(Time.time - lastSummonTime < fireRate || bypass) //Sick strat- hold onto your bullet and you can fire two in a row if you time it right
             return;
         
         lastSummonTime = Time.time;
@@ -27,7 +29,7 @@ public class ProjectileSpawner : MonoBehaviour {
         if(parent != null)
             activeProjectile.transform.SetParent(parent);
     }
-
+    
     public void LaunchProjectile() {
         if (activeProjectile == null)
             return;
@@ -36,5 +38,19 @@ public class ProjectileSpawner : MonoBehaviour {
         activeProjectile.Launch();
 
         activeProjectile = null;
+
+        StartCoroutine(ShootShots(amount));
+    }
+
+    private IEnumerator ShootShots(int amt) {
+        if (amt <= 0)
+            yield break;
+
+        yield return new WaitForSeconds(0.1f);
+        
+        Projectile proj = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+        proj.Launch();
+        
+        StartCoroutine(ShootShots(amt - 1));
     }
 }

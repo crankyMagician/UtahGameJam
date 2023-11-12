@@ -20,6 +20,7 @@ public class InputBehaviour : MonoBehaviour {
         
         if(Input.GetKeyDown(KeyCode.Space)) {
             projectileSpawner.fireRate = GameManager.Instance.timeManager.FireRate;
+            projectileSpawner.amount = GameManager.Instance.timeManager.AmtOfShots;
             
             projectileSpawner.SummonProjectile(transform);
         } else if (Input.GetKeyUp(KeyCode.Space)) {

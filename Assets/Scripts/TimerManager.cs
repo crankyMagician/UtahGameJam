@@ -14,6 +14,7 @@ public class TimeManager
     public const float SwitchCooldown = 15f;
 
     public float FireRate = 0.5f;
+    public int AmtOfShots = 0;
     
     public void UpdateTimers(float deltaTime)
     {

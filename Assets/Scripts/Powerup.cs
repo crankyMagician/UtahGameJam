@@ -17,4 +17,8 @@ public class Powerup : ScriptableObject {
     public void FastReload() {
         GameManager.Instance.timeManager.FireRate = GameManager.Instance.timeManager.FireRate / 1.25f;
     }
+
+    public void GainShot() {
+        GameManager.Instance.timeManager.AmtOfShots++;
+    }
 }
