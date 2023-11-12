@@ -14,6 +14,8 @@ public class WorldSwitcher : MonoBehaviour {
         } else {
             Destroy(gameObject);
         }
+        
+        GameManager.OnGameRestart += OnRestart;
     }
     
     /// <summary>
@@ -51,5 +53,9 @@ public class WorldSwitcher : MonoBehaviour {
     public void UnregisterSwitcher(IWorldSwitcher worldSwitcher) {
         if(switchers.Contains(worldSwitcher))
             switchers.Remove(worldSwitcher);
+    }
+
+    private void OnRestart() {
+        SwitchWorld();
     }
 }
