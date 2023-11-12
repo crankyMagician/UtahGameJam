@@ -36,7 +36,7 @@ public class RandomSoundPlayer: MonoBehaviour
 
 	public void PlayRandomSound()
 	{
-		// if (audioSource != null && sounds.Count > 0)
+		if (audioSource != null && sounds.Count > 0)
 		{
 			int soundIndex = Random.Range(0,sounds.Count); // creates a number between 1 and 12
 			audioSource.PlayOneShot(sounds[soundIndex]);
