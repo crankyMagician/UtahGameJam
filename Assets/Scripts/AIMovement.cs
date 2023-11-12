@@ -46,12 +46,6 @@ public class AIMovementConstantParameters
 		return (int)((random.NextDouble() * (max - min)) + min);
 	}
 
-	public static Func<float, float> RandomEaseFunction()
-	{
-		int index = RandomInt(0, EasingFunctions.FunctionList.Count());
-		return EasingFunctions.FunctionList[index];
-	}
-
 	private static System.Random random = new System.Random();
 };
 
@@ -89,7 +83,7 @@ public class AIEaseToPosition
 
 		while (data.seconds == 0)
 			data.seconds = Random(Constants.timeToBottomMin, Constants.timeToBottomMax);
-		data.easeFunction = RandomEaseFunction();
+		data.easeFunction = RandomEaseFunction_TopBot();
 		data.targetPosition = Constants.yTargetLocation;
 		return data;
 	}
@@ -111,6 +105,11 @@ public class AIEaseToPosition
 		return EasingFunctions.FunctionList[index];
 	}
 
+	public static Func<float, float> RandomEaseFunction_TopBot()
+	{
+		int index = RandomInt(0, EasingFunctions.TopBotFunctionList.Count());
+		return EasingFunctions.TopBotFunctionList[index];
+	}
 	private static AIMovementConstantParameters Constants => AIMovementConstantParameters.Instance;
 	private static System.Random random = new System.Random();
 };

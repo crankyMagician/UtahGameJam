@@ -24,12 +24,12 @@ public class AIManager : MonoBehaviour
 	{
 		RepeatedSpawnWave(
 				AIParameters.Make(),
-				1,
+				2,
 				AIMovementConstantParameters.RandomInitialPosition());
 
 		RepeatedSpawnWave(
 				AIParameters.Make(),
-				1,
+				1.5f,
 				AIMovementConstantParameters.RandomInitialPosition());
 
 		RepeatedSpawnWave(
@@ -45,7 +45,7 @@ public class AIManager : MonoBehaviour
 			/// and slowly grow if the value is low
 			float mobSize,
 			Vector3 initialPosition,
-			float delayBetweenMobs = 1f,
+			float delayBetweenMobs = 1.2f,
 			float delayBetweenWaves = 10,
 			/// Slowly increase the size of the wave
 			float mobSizeScaler = 1.2f,

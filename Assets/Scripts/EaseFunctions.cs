@@ -151,4 +151,39 @@ public static class EasingFunctions
             EasingFunctions.InOutBounce
         };
 
+	/// Remove all the smoothing-out so that it doesn't rocket to the bottom of the map
+	public static List<Func<float, float>> TopBotFunctionList = new List<Func<float, float>>
+        {
+            EasingFunctions.Linear,
+            EasingFunctions.InQuad,
+        //     EasingFunctions.OutQuad,
+            EasingFunctions.InOutQuad,
+        //     EasingFunctions.InCubic,
+        //     EasingFunctions.OutCubic,
+        //     EasingFunctions.InOutCubic,
+        //     EasingFunctions.InQuart,
+        //     EasingFunctions.OutQuart,
+        //     EasingFunctions.InOutQuart,
+        //     EasingFunctions.InQuint,
+        //     EasingFunctions.OutQuint,
+        //     EasingFunctions.InOutQuint,
+            EasingFunctions.InSine,
+        //     EasingFunctions.OutSine,
+            EasingFunctions.InOutSine,
+        //     EasingFunctions.InExpo,
+        //     EasingFunctions.OutExpo,
+        //     EasingFunctions.InOutExpo,
+            EasingFunctions.InCirc,
+        //     EasingFunctions.OutCirc,
+            EasingFunctions.InOutCirc,
+            EasingFunctions.InElastic,
+        //     EasingFunctions.OutElastic,
+            EasingFunctions.InOutElastic,
+            EasingFunctions.InBack,
+        //     EasingFunctions.OutBack,
+            EasingFunctions.InOutBack,
+            EasingFunctions.InBounce,
+        //     EasingFunctions.OutBounce,
+            EasingFunctions.InOutBounce
+        };
 }
