@@ -12,7 +12,9 @@ public class AIManager : MonoBehaviour
 	bool GameIsActive => GameManager.Instance.isGameActive;
 
 	public GameObject botTemplate;
-
+	public GameObject flyPrefab;
+	public GameObject crabPrefab;
+	
 	void Start()
 	{
 		StartGame();
@@ -25,17 +27,20 @@ public class AIManager : MonoBehaviour
 		RepeatedSpawnWave(
 				AIParameters.Make(),
 				2,
-				AIMovementConstantParameters.RandomInitialPosition());
+				AIMovementConstantParameters.RandomInitialPosition(),
+				flyPrefab);
 
 		RepeatedSpawnWave(
 				AIParameters.Make(),
 				1.5f,
-				AIMovementConstantParameters.RandomInitialPosition());
+				AIMovementConstantParameters.RandomInitialPosition(),
+				crabPrefab);
 
 		RepeatedSpawnWave(
 				AIParameters.Make(),
 				1,
-				AIMovementConstantParameters.RandomInitialPosition());
+				AIMovementConstantParameters.RandomInitialPosition(),
+				botTemplate);
 	}
 
 	void RepeatedSpawnWave(
@@ -45,6 +50,7 @@ public class AIManager : MonoBehaviour
 			/// and slowly grow if the value is low
 			float mobSize,
 			Vector3 initialPosition,
+			GameObject prefab,
 			float delayBetweenMobs = 1.2f,
 			float delayBetweenWaves = 10,
 			/// Slowly increase the size of the wave
@@ -52,12 +58,12 @@ public class AIManager : MonoBehaviour
 			/// Slowly decrease the time between waves
 			float waveTimeScalar = 1f)
 	{
-		SpawnWave(movementParameters, mobSize, initialPosition, delayBetweenMobs);
+		SpawnWave(movementParameters, mobSize, initialPosition, prefab, delayBetweenMobs);
 		J.Timer.Delay(1, () =>
 		{
 			if (GameIsActive)
 			{
-				SpawnWave(movementParameters, mobSize, initialPosition, delayBetweenMobs);
+				SpawnWave(movementParameters, mobSize, initialPosition, prefab, delayBetweenMobs);
 				Timer.Delay(delayBetweenWaves, () =>
 				{
 					var newPos = AIMovementConstantParameters.RandomInitialPosition();
@@ -65,6 +71,7 @@ public class AIManager : MonoBehaviour
 						AIParameters.Make(),
 						(mobSize * mobSizeScaler),
 						newPos,
+						prefab,
 						delayBetweenMobs,
 						delayBetweenWaves * waveTimeScalar,
 						mobSizeScaler,
@@ -78,10 +85,11 @@ public class AIManager : MonoBehaviour
 		AIParameters movementParameters,
 		float waveCount,
 		Vector3 initialPosition,
+		GameObject prefab,
 		float delayBetweenMobs = .5f)
 	{
 		// Greedy spawn 1 man now
-		var bot = Instantiate(botTemplate);
+		var bot = Instantiate(prefab);
 		var ai  = bot.GetComponent<AIMovement>();
 		ai.movementParameters = movementParameters;
 		bot.transform.position = initialPosition;
@@ -90,7 +98,7 @@ public class AIManager : MonoBehaviour
 		for (int i = 1; i < (int)waveCount; ++i)
 		{
 			J.Timer.Delay((float)i * delayBetweenMobs, () => {
-				var bot = Instantiate(botTemplate);
+				var bot = Instantiate(prefab);
 				var ai  = bot.GetComponent<AIMovement>();
 				ai.movementParameters = movementParameters;
 				bot.transform.position = initialPosition;

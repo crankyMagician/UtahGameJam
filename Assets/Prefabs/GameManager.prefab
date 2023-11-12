@@ -50,11 +50,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeManager:
     timeSinceLastSwitch: 0
+    FireRate: 0.5
+    AmtOfShots: 0
+    speedMultiplier: 1
   isGameActive: 1
   Timer1Text: {fileID: 0}
   Timer2Text: {fileID: 0}
   TotalTimeText: {fileID: 0}
   GameOverText: {fileID: 0}
+  buttonText: {fileID: 0}
   proceduralImage: {fileID: 0}
   canvasGroup: {fileID: 0}
   retryButton: {fileID: 0}
@@ -84,6 +88,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   botTemplate: {fileID: 44756016061920716, guid: e5df4fca24176ca7c91d5ee0c17b712b, type: 3}
+  flyPrefab: {fileID: 6827355226540518399, guid: 7623cdce61643fd4399508f7f77f489c, type: 3}
+  crabPrefab: {fileID: 5517637368480846625, guid: ac72a21937d0bf9488ba14130bec2bc5, type: 3}
 --- !u!114 &9042443657497607987
 MonoBehaviour:
   m_ObjectHideFlags: 0
