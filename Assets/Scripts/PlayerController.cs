@@ -7,8 +7,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
     public static PlayerController Player { get; set; }
     
-    [SerializeField] private float speedMultiplier = 1; //This is reserved in case we decide to add a speed multiplier at some point
-    private const float speedModifier = 15; //This is used to counteract Time.deltaTime making our numbers really small
+    private const float speedModifier = 10; //This is used to counteract Time.deltaTime making our numbers really small
     private Vector3 lastMovement =  Vector3.zero;
 
     private void Awake() {
@@ -21,7 +20,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update() {
-        transform.position += lastMovement * (Time.deltaTime * speedModifier * speedMultiplier); //Order is to reduce vector math
+        transform.position += lastMovement * (Time.deltaTime * speedModifier * GameManager.Instance.timeManager.speedMultiplier); //Order is to reduce vector math
         
         //Clamp position inside of the camera
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);

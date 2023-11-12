@@ -15,10 +15,14 @@ public class Powerup : ScriptableObject {
     public UnityEvent onBuy;
     
     public void FastReload() {
-        GameManager.Instance.timeManager.FireRate = GameManager.Instance.timeManager.FireRate / 1.25f;
+        GameManager.Instance.timeManager.FireRate /= 1.25f;
     }
 
     public void GainShot() {
         GameManager.Instance.timeManager.AmtOfShots++;
+    }
+
+    public void MovementSpeed() {
+        GameManager.Instance.timeManager.speedMultiplier *= 1.25f;
     }
 }

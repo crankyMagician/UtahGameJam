@@ -15,6 +15,7 @@ public class TimeManager
 
     public float FireRate = 0.5f;
     public int AmtOfShots = 0;
+    public float speedMultiplier = 1f;
     
     public void UpdateTimers(float deltaTime)
     {

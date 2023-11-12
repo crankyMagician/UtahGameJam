@@ -34,29 +34,35 @@ public class RandomSoundPlayer: MonoBehaviour
 		audioSource = gameObject.AddComponent<AudioSource>();
 	}
 
-	public void PlayRandomSound()
-	{
-		if (audioSource != null && sounds.Count > 0)
-		{
-			int soundIndex = Random.Range(0,sounds.Count); // creates a number between 1 and 12
-			audioSource.PlayOneShot(sounds[soundIndex]);
+	public void PlayRandomSound() {
+		try {
+			if (audioSource != null && sounds.Count > 0) {
+				int soundIndex = Random.Range(0, sounds.Count); // creates a number between 1 and 12
+				audioSource.PlayOneShot(sounds[soundIndex]);
+			}
+		}
+		catch (Exception e) {
+			Debug.LogError(e);
 		}
 	}
 
 	public void PlayRandomSoundGlobal()
 	{
-		if (audioSource != null && sounds.Count > 0)
-		{
-			int soundIndex = Random.Range(0,sounds.Count); // creates a number between 1 and 12
-			
-			AudioClip sound = sounds[soundIndex];
-			if (sound == null)
-			{
-				Debug.Log("Error null sounds for object: " + gameObject.ToString());
-				return;
-			}
+		try {
 
-			GlobalInstance?.audioSource?.PlayOneShot(sound);
+			if (audioSource != null && sounds.Count > 0) {
+				int soundIndex = Random.Range(0, sounds.Count); // creates a number between 1 and 12
+
+				AudioClip sound = sounds[soundIndex];
+				if (sound == null) {
+					Debug.Log("Error null sounds for object: " + gameObject.ToString());
+					return;
+				}
+
+				GlobalInstance?.audioSource?.PlayOneShot(sound);
+			}
+		} catch (Exception e) {
+			Debug.LogError(e);
 		}
 	}
 

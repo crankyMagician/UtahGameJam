@@ -177,6 +177,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpawnPoint: {fileID: 7195437412837851285}
   projectilePrefab: {fileID: 7802528615570203916, guid: e9b372f7e4a9ca84287b5bd24c2a1920, type: 3}
+  fireRate: 0.5
+  lastSummonTime: -3.4028235e+38
+  amount: 0
 --- !u!330 &9026460383710670412
 ParticleSystemForceField:
   m_ObjectHideFlags: 0
@@ -687,6 +690,7 @@ MonoBehaviour:
   powerups:
   - {fileID: 11400000, guid: de11ea20ead21704fa7b77786a8a6d5d, type: 2}
   - {fileID: 11400000, guid: 8d5d24286095f314ab9ea9870ca92aca, type: 2}
+  - {fileID: 11400000, guid: c8cb169b40424a444a6d6bc02dcbc31b, type: 2}
   showContainer: {fileID: 0}
   shopItemPrefab: {fileID: 799501356994446463, guid: 75110b2e20733854dabc47d588789f81, type: 3}
 --- !u!50 &4441218099354179065
