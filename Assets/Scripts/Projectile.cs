@@ -11,7 +11,7 @@ public class Projectile : MonoBehaviour {
 
     [SerializeField] private String targetTag;
 
-    [SerializeField] public RandomSoundPlayer fireSounds = new RandomSoundPlayer();
+    [SerializeField] public RandomSoundPlayer fireSounds;
 
     private Rigidbody2D rb;
 
@@ -32,7 +32,7 @@ public class Projectile : MonoBehaviour {
     }
 
     public void Launch() {
-        fireSounds.PlaySound();
+        fireSounds.PlayRandomSound();
 
         rb.velocity = direction * speed;
         launchTime = Time.time;

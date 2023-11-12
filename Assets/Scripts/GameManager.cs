@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour
     public static OnGameStateChangeDelegate OnGameRestart;
     public static OnGameStateChangeDelegate OnGameEnd;
 
-    public AudioSource gameMusic;
-
     public TimeManager timeManager = new();
     private float totalElapsedTime = 0f;
     public bool isGameActive = true;
@@ -64,9 +62,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (gameMusic != null)
-            gameMusic.Play();
-
         try
         {
             InitializeUI();
@@ -159,7 +154,7 @@ public class GameManager : MonoBehaviour
         float fillAmount = CalculateFillAmount();
         if (proceduralImage != null)
             proceduralImage.SetFillAmount(fillAmount);
-        
+
         buttonText.text = Math.Abs(fillAmount - 1) < .001f ? "[R]" : "";
     }
 

@@ -144,7 +144,7 @@ public class AIMovement : MonoBehaviour
 	[SerializeField] private ParticleSystem deathParticlesPrefab;
 
 	/// Shouldn't be here but hacks
-	[SerializeField] private RandomSoundPlayer onBotDestroySoundPlayer = new RandomSoundPlayer();
+	[SerializeField] private RandomSoundPlayer onBotDestroySoundPlayer;
 
 	public delegate void OnEnemyReachedBottomDelegate(AIMovement movement);
 
@@ -253,7 +253,7 @@ public class AIMovement : MonoBehaviour
 	///Should we destroy here ??
 	public void DestroyBot()
 	{
-		onBotDestroySoundPlayer.PlaySound();
+		onBotDestroySoundPlayer.PlayRandomSoundGlobal();
 		ParticleSystem particle = Instantiate(deathParticlesPrefab);
 		particle.transform.position = transform.position;
 		particle.collision.AddPlane(PlayerController.Player.transform);
