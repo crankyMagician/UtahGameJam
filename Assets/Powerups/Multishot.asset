@@ -17,7 +17,7 @@ MonoBehaviour:
   description: Shoot +1 bullet
   maxCost: 30
   minCost: 20
-  chance: 50
+  chance: 40
   onBuy:
     m_PersistentCalls:
       m_Calls:
