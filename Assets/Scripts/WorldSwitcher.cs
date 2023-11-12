@@ -30,13 +30,17 @@ public class WorldSwitcher : MonoBehaviour {
     }
 
     private void SwitchWorld() {
-        for (var i = 0; i < switchers.Count; i++) {
+        for (int i = switchers.Count - 1; i >= 0; i--) {
             IWorldSwitcher switcher = switchers[i];
-            
-            if(switcher == null)
-                UnregisterSwitcher(null);
-            else 
-                switcher.OnSwitchWorld(GameManager.Instance.timeManager.IsTimer1Active());
+
+            try {
+                if (switcher == null)
+                    UnregisterSwitcher(null);
+                else
+                    switcher.OnSwitchWorld(GameManager.Instance.timeManager.IsTimer1Active());
+            } catch (Exception e) {
+                Debug.Log(e);
+            }
         }
     }
     

@@ -207,3 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e3867040d3b6c40aa116aab9adf462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  createdInWorld1: 0
+  startWorld1Sprite: {fileID: -420310704, guid: 7e723216c6410054bb84aec12624388f, type: 3}
+  startWorld2Sprite: {fileID: -1132428107, guid: 186bbe299ecffe648a1f1554d7e3a098, type: 3}
