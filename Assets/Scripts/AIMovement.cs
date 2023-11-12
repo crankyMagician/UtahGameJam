@@ -194,9 +194,10 @@ public class AIMovement : MonoBehaviour
 		// Constants.yTargetLocation = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.1f, 10)).y;
 		// Constants.yTargetLocation -= 1;
 	}
-
-	private void Start()
-	{
+	
+	private void Start() {
+		GameManager.OnGameEnd += OnRestart;
+		
 		lifetime = 0;
 		sideLifetime = 0;
 		movementParametersSideIndex = 0;
@@ -269,6 +270,14 @@ public class AIMovement : MonoBehaviour
 		particle.transform.position = transform.position;
 		particle.collision.AddPlane(PlayerController.Player.transform);
 		Destroy(gameObject);
+	}
+
+	private void OnRestart() {
+		Destroy(gameObject);
+	}
+
+	private void OnDestroy() {
+		GameManager.OnGameEnd -= OnRestart;
 	}
 }
 

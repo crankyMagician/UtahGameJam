@@ -132,4 +132,18 @@ public class TimeManager
             return false; // Default or error state
         }
     }
+
+    public void AddTimeToActiveTimer(float timeToAdd) {
+        try
+        {
+            if (isTimer1Active)
+                Timer1 += timeToAdd;
+            else
+                Timer2 += timeToAdd;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error in AddTimeToInactiveTimer: " + ex.Message);
+        }
+    }
 }

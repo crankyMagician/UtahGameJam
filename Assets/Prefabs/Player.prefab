@@ -136,7 +136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa06b32e14d907b4fbbd5ce5f19950e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 1
 --- !u!114 &6085814384221553418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,6 +690,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: de11ea20ead21704fa7b77786a8a6d5d, type: 2}
   - {fileID: 11400000, guid: 8d5d24286095f314ab9ea9870ca92aca, type: 2}
   - {fileID: 11400000, guid: c8cb169b40424a444a6d6bc02dcbc31b, type: 2}
+  - {fileID: 11400000, guid: 0897d9022070244428def5ea8ced9480, type: 2}
   showContainer: {fileID: 0}
   shopItemPrefab: {fileID: 799501356994446463, guid: 75110b2e20733854dabc47d588789f81, type: 3}
 --- !u!50 &4441218099354179065

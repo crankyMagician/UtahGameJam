@@ -25,4 +25,8 @@ public class Powerup : ScriptableObject {
     public void MovementSpeed() {
         GameManager.Instance.timeManager.speedMultiplier *= 1.25f;
     }
+
+    public void GainTime() {
+        GameManager.Instance.timeManager.AddTimeToActiveTimer(20f);
+    }
 }
