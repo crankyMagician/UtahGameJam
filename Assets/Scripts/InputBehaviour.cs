@@ -19,6 +19,8 @@ public class InputBehaviour : MonoBehaviour {
         controller.UpdateMovement(movement);
         
         if(Input.GetKeyDown(KeyCode.Space)) {
+            projectileSpawner.fireRate = GameManager.Instance.timeManager.FireRate;
+            
             projectileSpawner.SummonProjectile(transform);
         } else if (Input.GetKeyUp(KeyCode.Space)) {
             projectileSpawner.LaunchProjectile();

@@ -38,6 +38,7 @@ public class Projectile : MonoBehaviour {
         if(other.CompareTag(targetTag) && !hasHit) {
             if (other.TryGetComponent(out AIMovement movement)) { //This could be an interface ... if only there were time ;(
                 movement.DestroyBot();
+                GameManager.Instance.AddTimeToInactiveTimer();
             }
             
             hasHit = true;

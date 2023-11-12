@@ -15,8 +15,6 @@ public class Powerup : ScriptableObject {
     public UnityEvent onBuy;
     
     public void FastReload() {
-        ProjectileSpawner spawner = PlayerController.Player.GetComponent<ProjectileSpawner>();
-
-        spawner.fireRate /= 1.25f;
+        GameManager.Instance.timeManager.FireRate = GameManager.Instance.timeManager.FireRate / 1.25f;
     }
 }

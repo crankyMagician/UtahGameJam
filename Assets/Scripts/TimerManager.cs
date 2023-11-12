@@ -13,6 +13,8 @@ public class TimeManager
     public float timeSinceLastSwitch = 0f;
     public const float SwitchCooldown = 15f;
 
+    public float FireRate = 0.5f;
+    
     public void UpdateTimers(float deltaTime)
     {
         try
