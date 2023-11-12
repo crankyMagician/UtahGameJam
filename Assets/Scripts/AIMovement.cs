@@ -7,24 +7,149 @@ using System;
 namespace J
 {
 
+/// Global Constants
+public class AIMovementConstantParameters
+{
+	public float yStartLocation = 5;
+	public float yTargetLocation = 0;
+
+	public float xMin = -10;
+	public float xMax = 10;
+
+	public float timeToBottomMin = 8;
+	public float timeToBottomMax = 15;
+
+	public float timeToSideMin = 5;
+	public float timeToSideMax = 6;
+
+
+	public static AIMovementConstantParameters Instance = new AIMovementConstantParameters();
+	public static Vector3 RandomInitialPosition()
+	{
+		var position = new Vector3();
+		position.y = Instance.yStartLocation;
+		position.x = Random(Instance.xMin, Instance.xMax);
+		return position;
+	}
+
+	//TODO: These should be in a 'random' FILE but this is crappy
+	public static float Random(float min, float max)
+	{
+		return ((float)random.NextDouble() * (max - min)) + min;
+	}
+
+	public static int RandomInt(int min, int max)
+	{
+		return (int)((random.NextDouble() * (max - min)) + min);
+	}
+
+	public static Func<float, float> RandomEaseFunction()
+	{
+		int index = RandomInt(0, EasingFunctions.FunctionList.Count());
+		return EasingFunctions.FunctionList[index];
+	}
+
+	private static System.Random random = new System.Random();
+};
+
+/// Defines a specific path the AI will take
+public class AIEaseToPosition
+{
+	/// Time its going to take to shift to a single side
+	public float seconds;
+
+	/// Time its going to take to shift to a single side
+	public Func<float, float> easeFunction;
+
+	/// If this is AIEaseTo for top to bottom this should always be
+	/// the same as yTargetLocation
+	///
+	/// Otherwise this should be constrained between xMin and xMax
+	public float targetPosition = 0;
+
+	/// A factory function that initializes the data to random valid values
+	public static AIEaseToPosition MakeSide()
+	{
+		var data = new AIEaseToPosition();
+		data.seconds = Random(Constants.timeToSideMin, Constants.timeToSideMax);
+		data.easeFunction = RandomEaseFunction();
+		data.targetPosition = Random(Constants.xMin, Constants.xMax);
+		return data;
+	}
+
+	/// A factory function that initializes the data to random valid values
+	public static AIEaseToPosition MakeTop()
+	{
+		var data = new AIEaseToPosition();
+		data.seconds = Random(Constants.timeToBottomMin, Constants.timeToBottomMax);
+		data.easeFunction = RandomEaseFunction();
+		data.targetPosition = Constants.yTargetLocation;
+		return data;
+	}
+
+	//TODO: These should be in a 'random' FILE but this is crappy
+	public static float Random(float min, float max)
+	{
+		return ((float)random.NextDouble() * (max - min)) + min;
+	}
+
+	public static int RandomInt(int min, int max)
+	{
+		return (int)((random.NextDouble() * (max - min)) + min);
+	}
+
+	public static Func<float, float> RandomEaseFunction()
+	{
+		int index = RandomInt(0, EasingFunctions.FunctionList.Count());
+		return EasingFunctions.FunctionList[index];
+	}
+
+	private static AIMovementConstantParameters Constants => AIMovementConstantParameters.Instance;
+	private static System.Random random = new System.Random();
+};
+
+/// Defines how the AI is going to move
+public class AIParameters
+{
+	public float initialXPosition;
+
+	public List<AIEaseToPosition> timeToSides = new List<AIEaseToPosition>();
+
+	///...Hmmm we could make this a list if we want to have dynamic shift in how the AI reaches the bottom///
+	public AIEaseToPosition timeToBottom;
+
+	public static AIParameters Make(int sidePaths = 10)
+	{
+		var parameters = new AIParameters();
+		for (int i = 0; i < sidePaths; ++i)
+		{
+			parameters.timeToSides.Add(AIEaseToPosition.MakeSide());
+		}
+
+		parameters.initialXPosition = AIEaseToPosition.Random(
+			AIMovementConstantParameters.Instance.xMin,
+			AIMovementConstantParameters.Instance.xMax);
+
+		parameters.timeToBottom = AIEaseToPosition.MakeTop();
+		return parameters;
+	}
+};
 
 public class AIMovement : MonoBehaviour
 {
 	[SerializeField] private ParticleSystem deathParticlesPrefab;
-	
+
 	public delegate void OnEnemyReachedBottomDelegate(AIMovement movement);
 
 	static OnEnemyReachedBottomDelegate OnEnemyReachedBottom;
 	OnEnemyReachedBottomDelegate OnReachedBottom;
 
-	/// This should be 'top of the screen location'
-	float yStartLocation = 5;
+	public static AIMovementConstantParameters Constants => AIMovementConstantParameters.Instance;
 
-	/// Bottom of the screen location (determines when this gets past the player )
-	float yTargetLocation = 0;
+	// This is going to be shared across a single-mob set
+	public AIParameters movementParameters = null;
 
-	/// Amount of time it takes for this to reach the bottom
-	float timeToBottom = 10;
+	public int movementParametersSideIndex = 0;
 
 	/// Amount this has been alive (Used for lerping from top to bottom)
 	float lifetime = 0;
@@ -32,35 +157,42 @@ public class AIMovement : MonoBehaviour
 	/// Amount of time this has been going left/right - used in lerping from left to right
 	float sideLifetime = 0;
 
-	/// Denotes the furthest point leftwards they can be on the side of the screen
-	/// When the enemy hits this point it will attemp to start moving in the other
-	/// Direction
-	/// we can change this to be smaller/larger then the screen to change the timing of this
-	float xLowerBound = -10;
-
-	/// Denotes the furthest point rightwards they can be on the side of the screen
-	float xUpperBound = 10;
-	float currentTargetSide = -10;
-
-	/// Amount of time its going to take to reach the next side
-	float timeToNextSide = 5;
-
 	/// The initial x position when they switched the last left/right direction, this is used in smoothing left/right
-	float initialX;
+	float initialX = 0;
+
+	AIEaseToPosition CurrentSideParams
+	{
+		get
+		{
+			if (movementParameters.timeToSides.Count() > 0)
+			{
+				int index = movementParametersSideIndex % movementParameters.timeToSides.Count();
+				return movementParameters.timeToSides[index];
+			}
+			return null;
+		}
+	}
+
+	float CurrentTargetX => CurrentSideParams.targetPosition;
+	float CurrentTimeToSide => CurrentSideParams.seconds;
+	float CurrentTimeToBottom => movementParameters.timeToBottom.seconds;
+
+	Func<float, float> CurrentSideEase => CurrentSideParams.easeFunction;
+	Func<float, float> CurrentBottomEase => movementParameters.timeToBottom.easeFunction;
 
 	private void Awake()
 	{
-		yTargetLocation = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.1f, 10)).y;
-		yTargetLocation -= 1;
+		Constants.yTargetLocation = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.1f, 10)).y;
+		Constants.yTargetLocation -= 1;
 	}
 
 	private void Start()
 	{
 		lifetime = 0;
 		sideLifetime = 0;
+		movementParametersSideIndex = 0;
 
 		//TODO: make this init etter
-		currentTargetSide = xLowerBound;
 		initialX = transform.position.x;
 	}
 
@@ -69,44 +201,40 @@ public class AIMovement : MonoBehaviour
 		lifetime += Time.deltaTime;
 		sideLifetime += Time.deltaTime;
 
-		float alphaLeftRight = sideLifetime / timeToNextSide;
-		float tweenAlphaLeftRight = EasingFunctions.InOutBounce(alphaLeftRight);
+		float alphaLeftRight = sideLifetime / CurrentTimeToSide;
+		float tweenAlphaLeftRight = CurrentSideEase.Invoke(alphaLeftRight);
 
-		float alpha = lifetime / timeToBottom;
-		float tweenAlpha = EasingFunctions.InOutBounce(alpha);
+		float alpha = lifetime / CurrentTimeToBottom;
+		float tweenAlpha = CurrentBottomEase.Invoke(alpha);
 
 		Vector3 pos = transform.position;
 		pos.y = Mathf.Lerp(
-				yStartLocation,
-				yTargetLocation,
+				Constants.yStartLocation,
+				Constants.yTargetLocation,
 				tweenAlpha);
 
 		pos.x = Mathf.Lerp(
 				initialX,
-				currentTargetSide,
+				CurrentTargetX,
 				tweenAlphaLeftRight);
 
 		transform.position = pos;
 
 		///Check if we are close to Side Bound
 		/// Swap the swides if we hit the other side
-		if (Mathf.Abs(transform.position.x - currentTargetSide) < .005)
+		if (Mathf.Abs(transform.position.x - CurrentTargetX) < .005)
 		{
-			if (currentTargetSide == xLowerBound)
-				currentTargetSide = xUpperBound;
-			else if (currentTargetSide == xUpperBound)
-				currentTargetSide = xLowerBound;
-
-			initialX = transform.position.x;
+			initialX = CurrentTargetX;
 			sideLifetime = 0;
+			++movementParametersSideIndex;
 		}
 		///Check if we are close
-		if (Mathf.Abs(transform.position.y - yTargetLocation) < .005)
+		if (Mathf.Abs(transform.position.y - Constants.yTargetLocation) < .005)
 		{
 			OnEnemyReachedBottom?.Invoke(this);
 			OnReachedBottom?.Invoke(this);
 			DestroyBot();
-			
+
 			GameManager.Instance.RemoveTimeFromActiveTimer();
 		}
 	}
@@ -116,7 +244,7 @@ public class AIMovement : MonoBehaviour
 		ParticleSystem particle = Instantiate(deathParticlesPrefab);
 		particle.transform.position = transform.position;
 		particle.collision.AddPlane(PlayerController.Player.transform);
-        
+
 		Destroy(gameObject);
 	}
 
