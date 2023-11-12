@@ -14,7 +14,9 @@ public class Projectile : MonoBehaviour {
 
     private float lifespan = 10f;
     private float launchTime = float.MaxValue;
-    
+
+    private bool hasHit = false;
+
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
     }
@@ -32,7 +34,9 @@ public class Projectile : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag(targetTag)) {
+        if(other.CompareTag(targetTag) && !hasHit) {
+            hasHit = true;
+            
             Destroy(gameObject);
         }
     }
