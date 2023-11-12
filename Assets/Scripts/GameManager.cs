@@ -9,6 +9,11 @@ using UnityEngine.UI.ProceduralImage;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public delegate void OnGameStateChangeDelegate();
+
+    /// This should be owned by the class but easy mode
+    public static OnGameStateChangeDelegate OnGameRestart;
+    public static OnGameStateChangeDelegate OnGameEnd;
 
     public TimeManager timeManager = new();
     private float totalElapsedTime = 0f;
@@ -212,7 +217,10 @@ public class GameManager : MonoBehaviour
         try
         {
             isGameActive = false;
+
+            /// These names are confusing AF
             OnEndGame?.Invoke();
+            OnGameEnd?.Invoke();
             Debug.Log("Game ended");
 
             // Tweening the GameOverText
@@ -267,7 +275,7 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Error in AddTimeToInactiveTimer: " + ex.Message);
         }
     }
-    
+
     [Button("Restart Game")]
     public void RestartGame()
     {
@@ -285,6 +293,8 @@ public class GameManager : MonoBehaviour
             quitButton.gameObject.SetActive(false);
 
             Debug.Log("Game restarted");
+
+            OnGameRestart?.Invoke();
         });
     }
 

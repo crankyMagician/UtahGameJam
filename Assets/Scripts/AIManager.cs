@@ -15,6 +15,13 @@ public class AIManager : MonoBehaviour
 
 	void Start()
 	{
+		StartGame();
+		GameManager.OnGameEnd += () => { J.Timer.ClearTimers(); };
+		GameManager.OnGameRestart += () => { StartGame(); };
+	}
+
+	void StartGame()
+	{
 		RepeatedSpawnWave(
 				AIParameters.Make(),
 				1,

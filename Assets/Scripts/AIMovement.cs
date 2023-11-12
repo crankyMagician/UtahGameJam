@@ -56,7 +56,7 @@ public class AIMovementConstantParameters
 public class AIEaseToPosition
 {
 	/// Time its going to take to shift to a single side
-	public float seconds;
+	public float seconds = 0;
 
 	/// Time its going to take to shift to a single side
 	public Func<float, float> easeFunction;
@@ -71,7 +71,9 @@ public class AIEaseToPosition
 	public static AIEaseToPosition MakeSide()
 	{
 		var data = new AIEaseToPosition();
-		data.seconds = Random(Constants.timeToSideMin, Constants.timeToSideMax);
+
+		while (data.seconds == 0)
+			data.seconds = Random(Constants.timeToSideMin, Constants.timeToSideMax);
 		data.easeFunction = RandomEaseFunction();
 		data.targetPosition = Random(Constants.xMin, Constants.xMax);
 		return data;
@@ -81,7 +83,9 @@ public class AIEaseToPosition
 	public static AIEaseToPosition MakeTop()
 	{
 		var data = new AIEaseToPosition();
-		data.seconds = Random(Constants.timeToBottomMin, Constants.timeToBottomMax);
+
+		while (data.seconds == 0)
+			data.seconds = Random(Constants.timeToBottomMin, Constants.timeToBottomMax);
 		data.easeFunction = RandomEaseFunction();
 		data.targetPosition = Constants.yTargetLocation;
 		return data;
@@ -212,6 +216,10 @@ public class AIMovement : MonoBehaviour
 				Constants.yStartLocation,
 				Constants.yTargetLocation,
 				tweenAlpha);
+
+		// Check for nans - idk why this happens
+		if (pos.y != pos.y)
+			pos.y = transform.position.y;
 
 		pos.x = Mathf.Lerp(
 				initialX,

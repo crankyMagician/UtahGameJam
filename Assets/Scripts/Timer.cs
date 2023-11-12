@@ -18,6 +18,13 @@ namespace J
 			return false;
 		}
 
+		public static int ClearTimers()
+		{
+			int count = Instance.timers.Count();
+			Instance.timers.Clear();
+			return count;
+		}
+
 		static Timer Instance;
 
 		private List<TimerInfo> timers = new List<TimerInfo>()	;
