@@ -79,8 +79,6 @@ public class TimeManager
                 Timer2 += timeToAdd;
             else
                 Timer1 += timeToAdd;
-
-            Debug.Log($"Added time. Timer1 = {Timer1}, Timer2 = {Timer2}");
         }
         catch (Exception ex)
         {
@@ -96,8 +94,6 @@ public class TimeManager
                 Timer2 -= timeToAdd;
             else
                 Timer1 -= timeToAdd;
-
-            Debug.Log($"Added time. Timer1 = {Timer1}, Timer2 = {Timer2}");
         }
         catch (Exception ex)
         {

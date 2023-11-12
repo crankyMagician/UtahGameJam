@@ -112,19 +112,14 @@ public class AIMovement : MonoBehaviour
 	}
 
 	///Should we destroy here ??
-	private void DestroyBot() {
+	public void DestroyBot() {
 		ParticleSystem particle = Instantiate(deathParticlesPrefab);
 		particle.transform.position = transform.position;
 		particle.collision.AddPlane(PlayerController.Player.transform);
         
+		Debug.Log("Destroying this bot");
+		
 		Destroy(gameObject);
-	}
-
-	private void OnTriggerEnter2D(Collider2D other) {
-		if (other.CompareTag("PlayerProjectile")) {
-			GameManager.Instance.AddTimeToInactiveTimer();
-			DestroyBot();
-		}
 	}
 }
 

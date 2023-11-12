@@ -256,12 +256,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RemoveTimeFromActiveTimer()
+    public void RemoveTimeFromActiveTimer(int amt = 10)
     {
         try
         {
-            timeManager.RemoveTimeFromActiveTimer(10f);
-            Debug.Log("Added time to inactive timer");
+            timeManager.RemoveTimeFromActiveTimer(amt);
         }
         catch (Exception ex)
         {

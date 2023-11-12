@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using J;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -35,6 +36,10 @@ public class Projectile : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag(targetTag) && !hasHit) {
+            if (other.TryGetComponent(out AIMovement movement)) { //This could be an interface ... if only there were time ;(
+                movement.DestroyBot();
+            }
+            
             hasHit = true;
             
             Destroy(gameObject);

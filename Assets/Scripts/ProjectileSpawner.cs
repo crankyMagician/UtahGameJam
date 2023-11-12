@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ProjectileSpawner : MonoBehaviour {
     [SerializeField] private Transform projectileSpawnPoint;
@@ -9,13 +12,13 @@ public class ProjectileSpawner : MonoBehaviour {
 
     private Projectile activeProjectile = null;
     
-    private float summonCooldown = 0.5f;
-    private float lastSummonTime = float.MinValue;
+    [SerializeField, ReadOnly] public float fireRate = 0.5f;
+    [SerializeField, ReadOnly] private float lastSummonTime = float.MinValue;
     
     public void SummonProjectile([CanBeNull] Transform parent) {
         if (activeProjectile != null)
             return;
-        if(Time.time - lastSummonTime < summonCooldown) //Sick strat- hold onto your bullet and you can fire two in a row if you time it right
+        if(Time.time - lastSummonTime < fireRate) //Sick strat- hold onto your bullet and you can fire two in a row if you time it right
             return;
         
         lastSummonTime = Time.time;
