@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     [BoxGroup("Timers")] public TextMeshProUGUI TotalTimeText;
 
     [BoxGroup("Timers")] public TextMeshProUGUI GameOverText;
+    [SerializeField] private TextMeshProUGUI buttonText;
 
     public ProceduralImage proceduralImage;
 
@@ -153,6 +154,8 @@ public class GameManager : MonoBehaviour
         float fillAmount = CalculateFillAmount();
         if (proceduralImage != null)
             proceduralImage.SetFillAmount(fillAmount);
+        
+        buttonText.text = Math.Abs(fillAmount - 1) < .001f ? "[R]" : "";
     }
 
     private float CalculateFillAmount()
