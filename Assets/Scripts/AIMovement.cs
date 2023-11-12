@@ -11,7 +11,10 @@ namespace J
 public class AIMovementConstantParameters
 {
 	public float yStartLocation = 5;
-	public float yTargetLocation = 0;
+
+	/// -5 is bottom of the screen -7 so if the AI
+	//// is ease to the bottom it doesn't just hover at the botom
+	public float yTargetLocation = -7;
 
 	public float xMin = -10;
 	public float xMax = 10;
@@ -189,8 +192,8 @@ public class AIMovement : MonoBehaviour
 
 	private void Awake()
 	{
-		Constants.yTargetLocation = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.1f, 10)).y;
-		Constants.yTargetLocation -= 1;
+		// Constants.yTargetLocation = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.1f, 10)).y;
+		// Constants.yTargetLocation -= 1;
 	}
 
 	private void Start()
@@ -228,6 +231,10 @@ public class AIMovement : MonoBehaviour
 				initialX,
 				CurrentTargetX,
 				tweenAlphaLeftRight);
+
+		// Check for nans - idk why this happens
+		if (pos.x != pos.x)
+			pos.x = transform.position.x;
 
 		transform.position = pos;
 

@@ -53,7 +53,7 @@ public class RandomSoundPlayer: MonoBehaviour
 				return;
 			}
 
-			GlobalInstance.audioSource.PlayOneShot(sounds[soundIndex]);
+			GlobalInstance?.audioSource?.PlayOneShot(sounds[soundIndex]);
 		}
 	}
 
