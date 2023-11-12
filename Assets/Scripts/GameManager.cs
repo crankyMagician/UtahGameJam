@@ -247,7 +247,7 @@ public class GameManager : MonoBehaviour
     {
         try
         {
-            timeManager.AddTimeToInactiveTimer(30f);
+            timeManager.AddTimeToInactiveTimer(10f);
             Debug.Log("Added time to inactive timer");
         }
         catch (Exception ex)
