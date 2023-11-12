@@ -48,13 +48,15 @@ public class RandomSoundPlayer: MonoBehaviour
 		if (audioSource != null && sounds.Count > 0)
 		{
 			int soundIndex = Random.Range(0,sounds.Count); // creates a number between 1 and 12
-			if (sounds[soundIndex] == null)
+			
+			AudioClip sound = sounds[soundIndex];
+			if (sound == null)
 			{
 				Debug.Log("Error null sounds for object: " + gameObject.ToString());
 				return;
 			}
 
-			GlobalInstance?.audioSource?.PlayOneShot(sounds[soundIndex]);
+			GlobalInstance?.audioSource?.PlayOneShot(sound);
 		}
 	}
 
