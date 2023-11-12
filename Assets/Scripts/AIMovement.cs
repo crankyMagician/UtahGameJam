@@ -10,7 +10,8 @@ namespace J
 /// Global Constants
 public class AIMovementConstantParameters
 {
-	public float yStartLocation = 5;
+	/// Choose a value > 5 so that the bots don't spawn in the screen
+	public float yStartLocation = 5.5f;
 
 	/// -5 is bottom of the screen -7 so if the AI
 	//// is ease to the bottom it doesn't just hover at the botom
@@ -19,12 +20,11 @@ public class AIMovementConstantParameters
 	public float xMin = -10;
 	public float xMax = 10;
 
-	public float timeToBottomMin = 8;
-	public float timeToBottomMax = 15;
+	public float timeToBottomMin = 9;
+	public float timeToBottomMax = 14;
 
 	public float timeToSideMin = 5;
-	public float timeToSideMax = 6;
-
+	public float timeToSideMax = 7;
 
 	public static AIMovementConstantParameters Instance = new AIMovementConstantParameters();
 	public static Vector3 RandomInitialPosition()
@@ -204,6 +204,11 @@ public class AIMovement : MonoBehaviour
 
 		//TODO: make this init etter
 		initialX = transform.position.x;
+
+		GameManager.OnGameRestart_OneShot += () =>
+		{
+			DestroyBot();
+		};
 	}
 
 	private void Update()

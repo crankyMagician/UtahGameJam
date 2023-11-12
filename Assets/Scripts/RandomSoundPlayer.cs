@@ -44,7 +44,7 @@ public class RandomSoundPlayer: MonoBehaviour
 
 	public void PlayRandomSoundGlobal()
 	{
-		// if (audioSource != null && sounds.Count > 0)
+		if (audioSource != null && sounds.Count > 0)
 		{
 			int soundIndex = rnd.Next(0, sounds.Count); // creates a number between 1 and 12
 			if (sounds[soundIndex] == null)

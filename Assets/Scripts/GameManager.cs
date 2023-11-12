@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     public static OnGameStateChangeDelegate OnGameRestart;
     public static OnGameStateChangeDelegate OnGameEnd;
 
+    public static OnGameStateChangeDelegate OnGameRestart_OneShot;
+    public static OnGameStateChangeDelegate OnGameEnd_OneShot;
+
     public TimeManager timeManager = new();
     private float totalElapsedTime = 0f;
     public bool isGameActive = true;
@@ -224,6 +227,8 @@ public class GameManager : MonoBehaviour
             /// These names are confusing AF
             OnEndGame?.Invoke();
             OnGameEnd?.Invoke();
+            OnGameEnd_OneShot?.Invoke();
+            OnGameEnd_OneShot = null;
             Debug.Log("Game ended");
 
             // Tweening the GameOverText
@@ -298,6 +303,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game restarted");
 
             OnGameRestart?.Invoke();
+            OnGameRestart_OneShot?.Invoke();
+            OnGameRestart_OneShot = null;
         });
     }
 
