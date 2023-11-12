@@ -10,7 +10,9 @@ public class Projectile : MonoBehaviour {
     [SerializeField] private Vector3 direction;
 
     [SerializeField] private String targetTag;
-    
+
+    [SerializeField] public RandomSoundPlayer fireSounds = new RandomSoundPlayer();
+
     private Rigidbody2D rb;
 
     private float lifespan = 10f;
@@ -30,6 +32,8 @@ public class Projectile : MonoBehaviour {
     }
 
     public void Launch() {
+        fireSounds.PlaySound();
+
         rb.velocity = direction * speed;
         launchTime = Time.time;
     }
@@ -40,9 +44,9 @@ public class Projectile : MonoBehaviour {
                 movement.DestroyBot();
                 GameManager.Instance.AddTimeToInactiveTimer();
             }
-            
+
             hasHit = true;
-            
+
             Destroy(gameObject);
         }
     }

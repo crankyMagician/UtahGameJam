@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public static OnGameStateChangeDelegate OnGameRestart;
     public static OnGameStateChangeDelegate OnGameEnd;
 
+    public AudioSource gameMusic;
+
     public TimeManager timeManager = new();
     private float totalElapsedTime = 0f;
     public bool isGameActive = true;
@@ -62,6 +64,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (gameMusic != null)
+            gameMusic.Play();
+
         try
         {
             InitializeUI();
