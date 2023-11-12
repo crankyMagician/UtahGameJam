@@ -10,8 +10,8 @@ public class TimeManager
   
 
     private bool isTimer1Active = true;
-    private float timeSinceLastSwitch = 0f;
-    private const float SwitchCooldown = 30f;
+    public float timeSinceLastSwitch = 0f;
+    public const float SwitchCooldown = 30f;
 
     public void UpdateTimers(float deltaTime)
     {

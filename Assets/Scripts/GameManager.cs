@@ -147,14 +147,12 @@ public class GameManager : MonoBehaviour
     {
         float fillAmount = CalculateFillAmount();
         if (proceduralImage != null)
-            proceduralImage.SetFillAmount(50f);
+            proceduralImage.SetFillAmount(fillAmount);
     }
 
     private float CalculateFillAmount()
     {
-        float activeTimer = timeManager.IsTimer1Active() ? timeManager.Timer1 : timeManager.Timer2;
-        float maxTimerValue = 120f; // Assuming the timer starts at 120 seconds
-        return Mathf.Clamp01(activeTimer / maxTimerValue);
+        return Mathf.Clamp01(timeManager.timeSinceLastSwitch / TimeManager.SwitchCooldown);
     }
 
     private void UpdateTimerTexts()
